@@ -1,184 +1,15 @@
 #include <iostream>
 #include <stdlib.h> //for clearing the screen
+
+#include "sudoku.h"
+#include "states.cpp"
+
 /*
 * TODO LIST
 * 1- Let the machine solve sudoku OK
 * 2- There is not any go back mechanism
 * 3- I need more complex algorithms
 */
-
-/// @brief sudoku values must be either of the following:
-enum writtenStates {std_Writen, hand_Writen, not_Writen };
-
-/// @brief while iterating followings will be used:
-enum Iterable_States { have_Iterated, haveNot_Iteraded };
-
-/// @brief Game states are the following:
-enum States {
-	unknown_State, main_Menu, load_Game, enter_As_Full, enter_As_Line,
-	enter_As_Index, sudoku_Loaded, solveByHand, solveByMachine, load_Example_Game
-};
-
-
-class sudoku {
-private:
-	int s_Map[9][9];
-	writtenStates sudoku_Val_States[9][9];
-public:
-	/// @brief constructor
-	sudoku() {
-		init_S_Map();
-	}
-
-	/// @brief initializes sudoku map with all zeros
-	void init_S_Map() {
-		for (int row = 0; row <= 8; row++) {
-			for (int col = 0; col <= 8; col++) {
-				s_Map[row][col] = 0;
-				sudoku_Val_States[row][col] = writtenStates{not_Writen};
-			}
-		}
-	}
-	
-	/// @brief loads sudoku from given array
-	/// @param myList is the full sudoku values
-	void loadSudoku(int myList[9][9]) {
-		for (int row = 0; row < 9; row++) {
-			for (int col = 0; col < 9; col++) {
-				setIndex(row, col, myList[row][col]);
-
-				if (myList[row][col] != 0) {
-					sudoku_Val_States[row][col] = writtenStates{ std_Writen };
-				}
-			}
-		}
-	}
-
-	/// @brief returns the value located by parameters
-	/// @param x row parameter
-	/// @param y column parameter
-	/// @return value at the specified location
-	int getIndex(int x, int y) {
-		return s_Map[x][y];
-	}
-	
-	/// @brief Returns the written state of that specific location in the sudoku table
-	/// @param x row value
-	/// @param y column value
-	/// @return written state value
-	writtenStates getWrittenState_ByIndex(const int x, const int y) {
-		return sudoku_Val_States[x][y];
-	}
-
-	/// @brief Sets the written state at the specific location in the state table
-	/// @param x row value
-	/// @param y column value
-	/// @param state  is the state that will be written
-	void setWrittenState_ByIndex(const int x, const int y, const writtenStates state) {
-		sudoku_Val_States[x][y] = state;
-	}
-
-	/// @brief Sets the index, also arranges its state. Note that it can only assign hand writen values.
-	/// @param x row value
-	/// @param y column value
-	/// @param val value that will be written
-	/// @return 0 if OK. 1 otherwise
-	int setIndexByHand(int x, int y, int val) {
-		if ((val >= 1) && (val <= 9) && (sudoku_Val_States[x][y] != writtenStates{ std_Writen})) {
-			s_Map[x][y] = val;
-			sudoku_Val_States[x][y] = writtenStates{ hand_Writen };
-			return 0;
-		}
-		else if ((val == 0) && (sudoku_Val_States[x][y] != writtenStates{ std_Writen })) {
-			s_Map[x][y] = val;
-			sudoku_Val_States[x][y] = writtenStates{ not_Writen };
-			return 0;
-		}
-		else if (sudoku_Val_States[x][y] == writtenStates{ std_Writen }) {
-			std::cout << "It is not writable" << std::endl;
-			return 1;
-		}
-		return 1; //Error
-	}
-
-	/// @brief sets the value at the specified location
-	/// @param x row parameter
-	/// @param y column parameter
-	/// @param val value that will be changed into
-	/// @return error value
-	int setIndex(int x, int y, int val) {
-		if ((val >= 0) || (val <= 9)) {
-			s_Map[x][y] = val;
-			return 0;
-		}
-		return 1; //Error
-	}
-	
-	/// @brief This function is used while printing. if it is handwritten value then it adds paranthesis.
-	/// @param row row number
-	/// @param col column number
-	void printValueByWrittenState(int row, int col) {
-		if (sudoku_Val_States[row][col] == writtenStates{ std_Writen }) {
-			std::cout << " " << s_Map[row][col] << " ";
-		}
-		else if (sudoku_Val_States[row][col] == writtenStates{ hand_Writen }) {
-			std::cout << "(" << s_Map[row][col] << ")";
-		}
-		else {
-			std::cout << " " << "0" << " ";
-		}
-	}
-	
-	/// @brief prints the sudoku table
-	void printSudoku() {
-		std::cout << std::endl;
-		int indexer_3 = 1;
-		int indexer_9 = 1;
-		int indexer_27 = 1;
-		for (int row = 0; row <= 8; row++) {
-			for (int col = 0; col <= 8; col++) {
-				//std::cout << s_Map[row][col];
-				printValueByWrittenState(row, col);
-				if (indexer_27 == 27) {
-					std::cout << std::endl;
-					std::cout << "===================================" << std::endl;
-					indexer_27 = 1;
-					indexer_9 = 1;
-					indexer_3 = 1;
-				}
-				else if (indexer_9 == 9) {
-					std::cout << std::endl;
-					indexer_9 = 1;
-					indexer_3 = 1;
-					indexer_27++;
-				}
-				else if (indexer_3 == 3) {
-					std::cout << " || ";
-					indexer_3 = 1;
-					indexer_9++;
-					indexer_27++;
-				}
-				else {
-					indexer_3++;
-					indexer_9++;
-					indexer_27++;
-				}
-
-			}
-		}
-
-		std::cout << "_________________________" << std::endl;
-	}
-
-	/// @brief prints specified location
-	/// @param row is the row number
-	/// @param col is the column number
-	void printValue(int row, int col) {
-		std::cout << "value at (" << row << ", " << col << ") = " << getIndex(row, col) << std::endl;
-	}
-}; //end of the class sudoku
-
-
 
 class Game {
 private:
@@ -1133,6 +964,10 @@ public:
 	}
 
 };
+
+
+
+
 int main() {
 	Game game;
 	game.Start();
