@@ -2,8 +2,9 @@
 #include <stdlib.h> //for clearing the screen
 /*
 * TODO LIST
-* 1- Let the machine solve sudoku
+* 1- Let the machine solve sudoku OK
 * 2- There is not any go back mechanism
+* 3- I need more complex algorithms
 */
 
 /// @brief sudoku values must be either of the following:
