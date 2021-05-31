@@ -5,9 +5,8 @@
 
 /*
 * TODO LIST
-* 1- There is not any go back mechanism
-* 2- I need more complex algorithms
-* 3- cleanup in the header and cpp files of game object
+* 1- There is not any go back mechanism in the menus
+* 2- I need more complex algorithms for the sudoku's that have multiple solutions
 */
 
 int main() {
