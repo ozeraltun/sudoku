@@ -9,7 +9,7 @@ enum Iterable_States { have_Iterated, haveNot_Iteraded };
 
 /// @brief Game states are the following:
 enum States {
-	unknown_State, main_Menu, load_Game, enter_As_Full, enter_As_Line,
-	enter_As_Index, sudoku_Loaded, solveByHand, solveByMachine, load_Example_Game
+	unknown_State, main_Menu, load_Game, enter_As_Full, enter_As_Line, 
+	sudoku_Loaded, solveByHand, solveByMachine, load_Example_Game
 };
 #endif

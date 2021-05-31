@@ -78,7 +78,6 @@ void sudoku::printValueByWrittenState(const int row, const int col) {
 	}
 }
 
-/// @brief prints the sudoku table
 void sudoku::printSudoku() {
 	std::cout << std::endl;
 	int indexer_3 = 1;
