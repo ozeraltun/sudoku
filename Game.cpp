@@ -55,147 +55,20 @@ void Game::Iterate() {
 }
 
 void Game::LoadExampleGame() {
-	/* Loads this one:
-	5 3 0  0 7 0  0 0 0
-	6 0 0  1 9 5  0 0 0
-	0 9 8  0 0 0  0 6 0
+	int exampleGame[9][9] = { 
+		{5,3,0, 0,7,0, 0,0,0},
+		{6,0,0, 1,9,5, 0,0,0},
+		{0,9,8, 0,0,0, 0,6,0},
+	
+		{8,0,0, 0,6,0, 0,0,3},
+		{4,0,0, 8,0,3, 0,0,1},
+		{7,0,0, 0,2,0, 0,0,6},
+		
+		{0,6,0, 0,0,0, 2,8,0},
+		{0,0,0, 4,1,9, 0,0,5},
+		{0,0,0, 0,8,0, 0,7,9}, };
 
-	8 0 0  0 6 0  0 0 3
-	4 0 0  8 0 3  0 0 1
-	7 0 0  0 2 0  0 0 6
-
-	0 6 0  0 0 0  2 8 0
-	0 0 0  4 1 9  0 0 5
-	0 0 0  0 8 0  0 7 9
-	*/
-	int fullset[9][9];
-
-	//5 3 0  0 7 0  0 0 0
-	fullset[0][0] = 5;
-	fullset[0][1] = 3;
-	fullset[0][2] = 0;
-
-	fullset[0][3] = 0;
-	fullset[0][4] = 7;
-	fullset[0][5] = 0;
-
-	fullset[0][6] = 0;
-	fullset[0][7] = 0;
-	fullset[0][8] = 0;
-
-	//sec row
-	//6 0 0  1 9 5  0 0 0
-	fullset[1][0] = 6;
-	fullset[1][1] = 0;
-	fullset[1][2] = 0;
-
-	fullset[1][3] = 1;
-	fullset[1][4] = 9;
-	fullset[1][5] = 5;
-
-	fullset[1][6] = 0;
-	fullset[1][7] = 0;
-	fullset[1][8] = 0;
-
-	//third row
-	//0 9 8  0 0 0  0 6 0
-	fullset[2][0] = 0;
-	fullset[2][1] = 9;
-	fullset[2][2] = 8;
-
-	fullset[2][3] = 0;
-	fullset[2][4] = 0;
-	fullset[2][5] = 0;
-
-	fullset[2][6] = 0;
-	fullset[2][7] = 6;
-	fullset[2][8] = 0;
-
-	//4th row
-	//8 0 0  0 6 0  0 0 3
-	fullset[3][0] = 8;
-	fullset[3][1] = 0;
-	fullset[3][2] = 0;
-
-	fullset[3][3] = 0;
-	fullset[3][4] = 6;
-	fullset[3][5] = 0;
-
-	fullset[3][6] = 0;
-	fullset[3][7] = 0;
-	fullset[3][8] = 3;
-
-	//5th row
-	//4 0 0  8 0 3  0 0 1
-	fullset[4][0] = 4;
-	fullset[4][1] = 0;
-	fullset[4][2] = 0;
-
-	fullset[4][3] = 8;
-	fullset[4][4] = 0;
-	fullset[4][5] = 3;
-
-	fullset[4][6] = 0;
-	fullset[4][7] = 0;
-	fullset[4][8] = 1;
-
-	//6th row
-	//7 0 0  0 2 0  0 0 6
-	fullset[5][0] = 7;
-	fullset[5][1] = 0;
-	fullset[5][2] = 0;
-
-	fullset[5][3] = 0;
-	fullset[5][4] = 2;
-	fullset[5][5] = 0;
-
-	fullset[5][6] = 0;
-	fullset[5][7] = 0;
-	fullset[5][8] = 6;
-
-	//7th row
-	//0 6 0  0 0 0  2 8 0
-	fullset[6][0] = 0;
-	fullset[6][1] = 6;
-	fullset[6][2] = 0;
-
-	fullset[6][3] = 0;
-	fullset[6][4] = 0;
-	fullset[6][5] = 0;
-
-	fullset[6][6] = 2;
-	fullset[6][7] = 8;
-	fullset[6][8] = 0;
-
-	//8th row
-	//0 0 0  4 1 9  0 0 5
-	fullset[7][0] = 0;
-	fullset[7][1] = 0;
-	fullset[7][2] = 0;
-
-	fullset[7][3] = 4;
-	fullset[7][4] = 1;
-	fullset[7][5] = 9;
-
-	fullset[7][6] = 0;
-	fullset[7][7] = 0;
-	fullset[7][8] = 5;
-
-
-	//8th row
-	//0 0 0  0 8 0  0 7 9
-	fullset[8][0] = 0;
-	fullset[8][1] = 0;
-	fullset[8][2] = 0;
-
-	fullset[8][3] = 0;
-	fullset[8][4] = 8;
-	fullset[8][5] = 0;
-
-	fullset[8][6] = 0;
-	fullset[8][7] = 7;
-	fullset[8][8] = 9;
-	S.loadSudoku(fullset);
+	S.loadSudoku(exampleGame);
 	nextState = States{ sudoku_Loaded };
 }
 
@@ -563,7 +436,6 @@ void Game::LoadAGame() {
 	std::cout << "How would you like to load the game: " << std::endl;
 	std::cout << "1-Enter as full" << std::endl;
 	std::cout << "2-Enter line by line" << std::endl;
-	std::cout << "3-Enter index by index" << std::endl;
 	std::cin >> selection;
 	switch (selection) {
 	case 1:
@@ -571,9 +443,6 @@ void Game::LoadAGame() {
 		break;
 	case 2:
 		stateAtLoad = States{ enter_As_Line };
-		break;
-	case 3:
-		stateAtLoad = States{ enter_As_Index };
 		break;
 	default:
 		stateAtLoad = States{ unknown_State };
